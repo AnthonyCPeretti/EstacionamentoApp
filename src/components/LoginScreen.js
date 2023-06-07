@@ -1,56 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import RNFS from 'react-native-fs';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    const path = RNFS.DocumentDirectoryPath + '/users.json';
-    const fileContent = await RNFS.readFile(path, 'utf8');
-    const userData = JSON.parse(fileContent);
-
-    const user = userData.users.find((user) => user.username === username && user.password === password);
-
-    if (user) {
+  const handleLogin = () => {
+    // Lógica de autenticação de usuário
+    if (username === 'admin' && password === 'admin123') {
       navigation.navigate('Home');
     } else {
       alert('Usuário ou senha inválidos');
     }
   };
-
-  useEffect(() => {
-    const createUsersJsonFile = async () => {
-      const path = RNFS.DocumentDirectoryPath + '/users.json';
-      const fileExists = await RNFS.exists(path);
-
-      if (!fileExists) {
-        const initialData = {
-          users: [
-            {
-              username: 'Anthony',
-              password: '123456',
-            },
-            {
-              username: 'user2',
-              password: 'password2',
-            },
-            {
-              username: 'user3',
-              password: 'password3',
-            },
-          ],
-        };
-
-        await RNFS.writeFile(path, JSON.stringify(initialData), 'utf8');
-      }
-    };
-
-    createUsersJsonFile();
-  }, []);
 
   return (
     <View style={styles.container}>
