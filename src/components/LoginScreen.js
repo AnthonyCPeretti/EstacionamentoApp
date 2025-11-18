@@ -8,7 +8,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Lógica de autenticação de usuário
+    // Lógica de autenticação de usuário (Sem banco de dados na implementação, por isso momentaneo teste de login e senha)
     if (username === 'admin' && password === 'admin123') {
       navigation.navigate('Home');
     } else {
